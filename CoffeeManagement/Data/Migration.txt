@@ -1,0 +1,5 @@
+﻿Add-Migration Init -OutputDir Data/Migrations
+UpDate-Database
+Remove-Migration
+
+Add-Migration Init -OutputDir Data/Migrations
