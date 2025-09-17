@@ -60,10 +60,6 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -80,7 +76,11 @@ namespace CoffeeManagement.Data.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("LastLoginDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -105,6 +105,13 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -125,12 +132,16 @@ namespace CoffeeManagement.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("RefreshToken")
+                        .IsUnique()
+                        .HasFilter("[RefreshToken] IS NOT NULL");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -148,7 +159,7 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Ingredient", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -175,7 +186,7 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.InventoryTransaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -206,7 +217,7 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -232,7 +243,7 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.OrderItem", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -264,7 +275,7 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -272,6 +283,7 @@ namespace CoffeeManagement.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
+                        .HasPrecision(18, 4)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
@@ -280,10 +292,6 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
@@ -294,26 +302,59 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductIngredient", b =>
                 {
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IngredientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("QuantityNeeded")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
-                    b.HasKey("ProductId", "IngredientId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IngredientId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductIngredients");
                 });
 
+            modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductSize", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductSizes");
+                });
+
             modelBuilder.Entity("CoffeeManagement.Data.Entities.ReportDailyRevenue", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -337,7 +378,7 @@ namespace CoffeeManagement.Data.Migrations
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.ReportInventorySummary", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -536,6 +577,17 @@ namespace CoffeeManagement.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductSize", b =>
+                {
+                    b.HasOne("CoffeeManagement.Data.Entities.Product", "Product")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("CoffeeManagement.Data.Entities.ReportInventorySummary", b =>
                 {
                     b.HasOne("CoffeeManagement.Data.Entities.Ingredient", "Ingredient")
@@ -620,6 +672,8 @@ namespace CoffeeManagement.Data.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("ProductIngredients");
+
+                    b.Navigation("ProductSizes");
                 });
 #pragma warning restore 612, 618
         }

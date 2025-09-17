@@ -1,6 +1,11 @@
-﻿namespace CoffeeManagement.Data.Dtos
+﻿using CoffeeManagement.Data.Entities.Custom;
+
+namespace CoffeeManagement.Data.Dtos
 {
-    public class ProductIngredientDto
+    public class ProductIngredientDto : BaseEntities
     {
+        public Guid ProductId { get; set; }
+        public Guid IngredientId { get; set; }
+        public decimal QuantityNeeded { get; set; }
     }
 }

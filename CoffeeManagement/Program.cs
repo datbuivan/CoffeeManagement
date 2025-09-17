@@ -1,5 +1,7 @@
+using AutoMapper;
 using CoffeeManagement.Data;
 using CoffeeManagement.Extensions;
+using CoffeeManagement.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocumentation();
+
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
 
 builder.Services.AddDbContext<DataContext>(opt =>
 {
@@ -19,6 +25,7 @@ builder.Services.AddDbContext<DataContext>(opt =>
     );
 });
 
+builder.Services.AddIdentityServices(builder.Configuration);
 
 builder.Services.AddApplicationServices();
 
@@ -61,5 +68,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var context = services.GetRequiredService<DataContext>();
+var logger = services.GetRequiredService<ILogger<Program>>();
+try
+{
+    await context.Database.MigrateAsync();
+    await DataContextSeed.SeedAsync(context);
+    await AppIdentityDbContextSeed.SeedRolesAsync(services);
+    await AppIdentityDbContextSeed.SeedUsersAsync(services);
+
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "An error occured during migration");
+}
 
 app.Run();

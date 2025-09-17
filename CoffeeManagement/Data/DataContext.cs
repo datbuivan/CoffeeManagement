@@ -1,4 +1,5 @@
 ﻿using CoffeeManagement.Data.Entities;
+using CoffeeManagement.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ namespace CoffeeManagement.Data
             : base(options) { }
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<ProductSize> ProductSizes => Set<ProductSize>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderItem> OrderItems => Set<OrderItem>();
         public DbSet<Ingredient> Ingredients => Set<Ingredient>();
@@ -27,9 +29,19 @@ namespace CoffeeManagement.Data
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
 
-            // Composite key cho ProductIngredient
-            builder.Entity<ProductIngredient>()
-                .HasKey(pi => new { pi.ProductId, pi.IngredientId });
+            builder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(e => e.RefreshToken).HasMaxLength(500);
+                entity.Property(e => e.FullName).HasMaxLength(100);
+
+                // Index for performance
+                entity.HasIndex(e => e.RefreshToken).IsUnique().HasFilter("[RefreshToken] IS NOT NULL");
+            });
+
+            builder.Entity<ProductSize>()
+                .HasOne(ps => ps.Product)
+                .WithMany(p => p.ProductSizes)
+                .HasForeignKey(ps => ps.ProductId);
 
             // Product - ProductIngredient (1-n)
             builder.Entity<ProductIngredient>()

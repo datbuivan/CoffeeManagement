@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CoffeeManagement.Data.Entities.Custom;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeManagement.Data.Entities
 {
 
     // định mức
-    public class ProductIngredient
+    public class ProductIngredient : BaseEntities
     {
         public Guid ProductId { get; set; }
         public Guid IngredientId { get; set; }

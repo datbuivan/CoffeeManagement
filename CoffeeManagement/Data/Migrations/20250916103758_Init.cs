@@ -32,7 +32,6 @@ namespace CoffeeManagement.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -225,8 +224,7 @@ namespace CoffeeManagement.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", precision: 18, scale: 4, nullable: true),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -317,13 +315,14 @@ namespace CoffeeManagement.Data.Migrations
                 name: "ProductIngredients",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IngredientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuantityNeeded = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductIngredients", x => new { x.ProductId, x.IngredientId });
+                    table.PrimaryKey("PK_ProductIngredients", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProductIngredients_Ingredients_IngredientId",
                         column: x => x.IngredientId,
@@ -332,6 +331,27 @@ namespace CoffeeManagement.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductIngredients_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductSizes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSizes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductSizes_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -398,9 +418,19 @@ namespace CoffeeManagement.Data.Migrations
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductIngredients_ProductId",
+                table: "ProductIngredients",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSizes_ProductId",
+                table: "ProductSizes",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReportInventorySummaries_IngredientId",
@@ -434,6 +464,9 @@ namespace CoffeeManagement.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductIngredients");
+
+            migrationBuilder.DropTable(
+                name: "ProductSizes");
 
             migrationBuilder.DropTable(
                 name: "ReportDailyRevenues");

@@ -51,7 +51,7 @@ namespace CoffeeManagement.Repositories
                 ?? throw new InvalidOperationException("Entity not found.");
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
             return await _context.Set<T>().FindAsync(id)
                 ?? throw new InvalidOperationException("Entity not found.");

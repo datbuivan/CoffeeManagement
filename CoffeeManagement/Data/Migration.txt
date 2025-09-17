@@ -2,4 +2,4 @@
 UpDate-Database
 Remove-Migration
 
-Add-Migration Init -OutputDir Data/Migrations
+Add-Migration AddAuth -OutputDir Data/Migrations

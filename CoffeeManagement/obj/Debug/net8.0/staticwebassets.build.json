@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "hmEgzMV1rFFL/voXDiOLQftAnonpI1VStALcawgTZcA=",
-  "Source": "FakeApi",
-  "BasePath": "_content/FakeApi",
+  "Hash": "W1SZ8gHsIc8j/na0pJxfYpmuZ34YUl0TpOERFqRFPGc=",
+  "Source": "CoffeeManagement",
+  "BasePath": "_content/CoffeeManagement",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

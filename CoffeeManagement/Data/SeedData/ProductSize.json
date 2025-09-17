@@ -1,0 +1,236 @@
+[
+  {
+    "ProductId": "d986cc67-797e-4822-fff1-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 39000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "d986cc67-797e-4822-fff1-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 39000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "d986cc67-797e-4822-fff1-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 45000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "19aea381-7a76-463b-fff2-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 29000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "19aea381-7a76-463b-fff2-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 35000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "19aea381-7a76-463b-fff2-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 39000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "0492c83e-5414-4845-fff3-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 29000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "0492c83e-5414-4845-fff3-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 35000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "0492c83e-5414-4845-fff3-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 39000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "5b555bbd-cc52-4ae6-fff7-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 45000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "5b555bbd-cc52-4ae6-fff7-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "5b555bbd-cc52-4ae6-fff7-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "272f8f7c-68b0-4cfa-fff8-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 45000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "272f8f7c-68b0-4cfa-fff8-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "272f8f7c-68b0-4cfa-fff8-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "117108bb-59e7-4b65-fff9-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 45000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "117108bb-59e7-4b65-fff9-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "117108bb-59e7-4b65-fff9-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "55edbf0c-85ec-4a8e-fffa-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 45000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "55edbf0c-85ec-4a8e-fffa-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "55edbf0c-85ec-4a8e-fffa-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "bc4959bd-640e-4cec-fffb-08ddf50cb082",
+    "Size": "Nhỏ",
+    "Price": 45000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "bc4959bd-640e-4cec-fffb-08ddf50cb082",
+    "Size": "Vừa",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "bc4959bd-640e-4cec-fffb-08ddf50cb082",
+    "Size": "Lớn",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "082b48eb-ce70-4f13-0006-08ddf50cb083",
+    "Size": "Nhỏ",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "082b48eb-ce70-4f13-0006-08ddf50cb083",
+    "Size": "Vừa",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "082b48eb-ce70-4f13-0006-08ddf50cb083",
+    "Size": "Lớn",
+    "Price": 69000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "2a7af49e-b5e3-4aeb-0007-08ddf50cb083",
+    "Size": "Nhỏ",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "2a7af49e-b5e3-4aeb-0007-08ddf50cb083",
+    "Size": "Vừa",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "2a7af49e-b5e3-4aeb-0007-08ddf50cb083",
+    "Size": "Lớn",
+    "Price": 69000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "b21c1e74-e8c9-4dc4-0008-08ddf50cb083",
+    "Size": "Nhỏ",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "b21c1e74-e8c9-4dc4-0008-08ddf50cb083",
+    "Size": "Vừa",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "b21c1e74-e8c9-4dc4-0008-08ddf50cb083",
+    "Size": "Lớn",
+    "Price": 69000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "d7c51bfa-5b0b-4f7c-0009-08ddf50cb083",
+    "Size": "Nhỏ",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "d7c51bfa-5b0b-4f7c-0009-08ddf50cb083",
+    "Size": "Vừa",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "d7c51bfa-5b0b-4f7c-0009-08ddf50cb083",
+    "Size": "Lớn",
+    "Price": 69000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "8b204c1b-55f5-4b63-000a-08ddf50cb083",
+    "Size": "Nhỏ",
+    "Price": 55000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "8b204c1b-55f5-4b63-000a-08ddf50cb083",
+    "Size": "Vừa",
+    "Price": 65000.0000,
+    "Stock": 100
+  },
+  {
+    "ProductId": "8b204c1b-55f5-4b63-000a-08ddf50cb083",
+    "Size": "Lớn",
+    "Price": 69000.0000,
+    "Stock": 100
+  }
+]
