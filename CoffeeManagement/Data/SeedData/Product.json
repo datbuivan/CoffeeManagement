@@ -2,218 +2,218 @@
   {
     "Id": "d986cc67-797e-4822-fff1-08ddf50cb082",
     "Name": "Phin Sữa Đá",
-    "CategoryId": "071e38d2-e602-4958-1186-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "d3e1b60d-2927-49fe-2aac-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "19aea381-7a76-463b-fff2-08ddf50cb082",
     "Name": "Phin Đen Đá",
-    "CategoryId": "071e38d2-e602-4958-1186-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "d3e1b60d-2927-49fe-2aac-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "0492c83e-5414-4845-fff3-08ddf50cb082",
     "Name": "Bạc Xỉu",
-    "CategoryId": "071e38d2-e602-4958-1186-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "d3e1b60d-2927-49fe-2aac-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "592a8d9a-017e-4785-fff4-08ddf50cb082",
     "Name": "Phindi Hạnh Nhân",
-    "CategoryId": "51c3348e-0085-41b4-1187-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "cb3d3a91-9106-4789-2aad-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "c1ae5a0f-ec2f-4a5c-fff5-08ddf50cb082",
     "Name": "Phindi Kem Sữa",
-    "CategoryId": "51c3348e-0085-41b4-1187-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "cb3d3a91-9106-4789-2aad-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "3c5a03a1-1c1a-42db-fff6-08ddf50cb082",
     "Name": "Phindi Choco",
-    "CategoryId": "51c3348e-0085-41b4-1187-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "cb3d3a91-9106-4789-2aad-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "5b555bbd-cc52-4ae6-fff7-08ddf50cb082",
     "Name": "Trà Sen Vàng",
-    "CategoryId": "56a4b046-593b-4639-1188-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "709f931a-b503-4dbc-2aae-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "272f8f7c-68b0-4cfa-fff8-08ddf50cb082",
     "Name": "Trà Thạch Đào",
-    "CategoryId": "56a4b046-593b-4639-1188-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "709f931a-b503-4dbc-2aae-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "117108bb-59e7-4b65-fff9-08ddf50cb082",
     "Name": "Trà Thanh Đào",
-    "CategoryId": "56a4b046-593b-4639-1188-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "709f931a-b503-4dbc-2aae-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "55edbf0c-85ec-4a8e-fffa-08ddf50cb082",
     "Name": "Trà Thạch Vải",
-    "CategoryId": "56a4b046-593b-4639-1188-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "709f931a-b503-4dbc-2aae-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "bc4959bd-640e-4cec-fffb-08ddf50cb082",
     "Name": "Trà Xanh Đậu Đỏ",
-    "CategoryId": "56a4b046-593b-4639-1188-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "709f931a-b503-4dbc-2aae-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "38422b8a-a1cd-4cc4-fffc-08ddf50cb082",
     "Name": "Bánh Chuối",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "e067271d-c0bd-4e31-fffd-08ddf50cb082",
     "Name": "Mousse Cacao",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "8b45817c-bd54-4a16-fffe-08ddf50cb082",
     "Name": "Phô Mai Chanh Dây",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "4d842a31-50de-46ca-ffff-08ddf50cb082",
     "Name": "Phô Mai Trà Xanh",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "614ab608-a93d-428c-0000-08ddf50cb083",
     "Name": "Bánh Su Kem",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "a45687b0-78e1-41de-0001-08ddf50cb083",
     "Name": "Phô Mai Caramel",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "8b612987-6cda-4afe-0002-08ddf50cb083",
     "Name": "Tiramisu",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "67b94ae1-a75d-405e-0003-08ddf50cb083",
     "Name": "Sô-Cô-La Highlands",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "cf417424-7189-460e-0004-08ddf50cb083",
     "Name": "Mousse Đào",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "f3bb4622-5707-4842-0005-08ddf50cb083",
     "Name": "Sữa Chua Phô Mai",
-    "CategoryId": "8366beda-b3fe-4ba2-1189-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "082b48eb-ce70-4f13-0006-08ddf50cb083",
     "Name": "Freeze Trà Xanh",
-    "CategoryId": "9117263f-33d1-4c51-118a-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "f0b385ce-acab-49d2-2ab0-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "2a7af49e-b5e3-4aeb-0007-08ddf50cb083",
     "Name": "Caramel Phin Freeze",
-    "CategoryId": "9117263f-33d1-4c51-118a-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "f0b385ce-acab-49d2-2ab0-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "b21c1e74-e8c9-4dc4-0008-08ddf50cb083",
     "Name": "Cookies & Cream",
-    "CategoryId": "9117263f-33d1-4c51-118a-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "f0b385ce-acab-49d2-2ab0-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "d7c51bfa-5b0b-4f7c-0009-08ddf50cb083",
     "Name": "Freeze Sô-Cô-La",
-    "CategoryId": "9117263f-33d1-4c51-118a-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "f0b385ce-acab-49d2-2ab0-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "8b204c1b-55f5-4b63-000a-08ddf50cb083",
     "Name": "Classic Phin Freeze",
-    "CategoryId": "9117263f-33d1-4c51-118a-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "f0b385ce-acab-49d2-2ab0-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "c6b9f4a2-11a5-4d88-000b-08ddf50cb083",
     "Name": "Patê",
-    "CategoryId": "1be0bcf2-ccb5-44f3-118b-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "98f62d08-7f4c-4014-2ab1-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "15a2d6cb-8d9f-411b-000c-08ddf50cb083",
     "Name": "Gà Phô Mai",
-    "CategoryId": "1be0bcf2-ccb5-44f3-118b-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "98f62d08-7f4c-4014-2ab1-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "4e38e1c1-ff60-4f36-000d-08ddf50cb083",
     "Name": "Bò xốt phô mai",
-    "CategoryId": "1be0bcf2-ccb5-44f3-118b-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "98f62d08-7f4c-4014-2ab1-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "0da1a8eb-7a14-4c79-000e-08ddf50cb083",
     "Name": "Hứng Khởi",
-    "CategoryId": "1be0bcf2-ccb5-44f3-118b-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "e992b882-6456-4c6e-2ab2-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   },
   {
     "Id": "7cbba902-4f4d-4c1f-000f-08ddf50cb083",
     "Name": "Chuyện Trò",
-    "CategoryId": "1be0bcf2-ccb5-44f3-118b-08ddf50e1446",
-    "ImageUrl": null,
+    "CategoryId": "e992b882-6456-4c6e-2ab2-08ddf507acbd",
+    "ImageUrl": "https://res.cloudinary.com/docff5snu/image/upload/v1758164880/coffee/products/l8kuktoxj8e94ibeabmp.png",
     "IsAvailable": true
   }
 ]

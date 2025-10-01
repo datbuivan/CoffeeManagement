@@ -1,5 +1,6 @@
 ﻿using CoffeeManagement.Data.Entities;
 using CoffeeManagement.Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,88 +12,113 @@ namespace CoffeeManagement.Services
     public class JwtService : IJwtService
     {
         private readonly IConfiguration _configuration;
-        private readonly string _secret;
-        private readonly string _issuer;
-        private readonly string _audience;
-        private readonly int _accessTokenExpiryMinutes;
-        private readonly int _refreshTokenExpiryDays;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public JwtService(IConfiguration configuration)
+        public JwtService(IConfiguration configuration, UserManager<ApplicationUser> userManager)
         {
             _configuration = configuration;
-            _secret = _configuration["Jwt:Secret"] ?? throw new InvalidOperationException("JWT Secret not configured");
-            _issuer = _configuration["Jwt:Issuer"] ?? throw new InvalidOperationException("JWT Issuer not configured");
-            _audience = _configuration["Jwt:Audience"] ?? throw new InvalidOperationException("JWT Audience not configured");
-            _accessTokenExpiryMinutes = int.Parse(_configuration["Jwt:AccessTokenExpiryMinutes"] ?? "15");
-            _refreshTokenExpiryDays = int.Parse(_configuration["Jwt:RefreshTokenExpiryDays"] ?? "7");
+            _userManager = userManager;
         }
 
-        public string GenerateAccessToken(ApplicationUser user)
+        public async Task<string> GenerateAccessTokenAsync(ApplicationUser user)
         {
-            var claims = new[]
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            // Lấy Secret Key và kiểm tra null
+            var secretKey = _configuration["Jwt:Secret"]
+                ?? throw new InvalidOperationException("JWT Secret key is missing in configuration.");
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            // Lấy thời gian hết hạn Access Token
+            if (!double.TryParse(_configuration["Jwt:AccessTokenExpiryMinutes"], out double expiryMinutes))
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
-            new Claim("fullName", user.FullName ?? string.Empty)
-        };
+                expiryMinutes = 15; // Mặc định 15 phút nếu cấu hình sai
+            }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName!),
+                new Claim(ClaimTypes.Email, user.Email!),
+                new Claim("fullname", user.FullName ?? user.UserName!)
+            };
 
-            var token = new JwtSecurityToken(
-                issuer: _issuer,
-                audience: _audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes),
-                signingCredentials: creds
-            );
+            // Lấy Claims về Roles
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            // Tạo Token Descriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"],
+                // Tính thời gian hết hạn từ cấu hình
+                Expires = DateTime.UtcNow.AddMinutes(expiryMinutes),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature
+                )
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
         public string GenerateRefreshToken()
         {
+            // Tạo chuỗi Refresh Token ngẫu nhiên và an toàn (64 byte)
             var randomNumber = new byte[64];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
         }
 
-        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        public string? GetPrincipalFromExpiredToken(string token)
         {
+            var secretKey = _configuration["Jwt:Secret"]
+                ?? throw new InvalidOperationException("JWT Secret key is missing in configuration.");
+
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false,
-                ValidateIssuer = false,
+                ValidateAudience = true,
+                ValidateIssuer = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret)),
-                ValidateLifetime = false // We don't care about the token's expiration date
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidAudience = _configuration["Jwt:Audience"],
+
+                // Cực kỳ quan trọng: Bỏ qua kiểm tra thời gian hết hạn (Expires time)
+                ValidateLifetime = false
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            SecurityToken securityToken;
 
-            if (securityToken is not JwtSecurityToken jwtSecurityToken ||
-                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            try
             {
-                throw new SecurityTokenException("Invalid token");
+                // Thử validate và trích xuất claims.
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+
+                // Kiểm tra token có phải là JWT Token với thuật toán HmacSha256 không
+                if (securityToken is not JwtSecurityToken jwtSecurityToken ||
+                    !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return null;
+                }
+
+                // Trích xuất tên người dùng (UserName/Name)
+                return principal.FindFirst(ClaimTypes.Name)?.Value;
             }
-
-            return principal;
+            catch
+            {
+                return null;
+            }
         }
 
-        public DateTime GetAccessTokenExpiry()
-        {
-            return DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes);
-        }
-
-        public DateTime GetRefreshTokenExpiry()
-        {
-            return DateTime.UtcNow.AddDays(_refreshTokenExpiryDays);
-        }
     }
 
 }

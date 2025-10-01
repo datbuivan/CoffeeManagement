@@ -1,40 +1,90 @@
-﻿using CoffeeManagement.Data.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using CoffeeManagement.Interface;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using CoffeeManagement.Models.Role;
 
 namespace CoffeeManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    // [Authorize(Roles = "ADMIN")]
     public class RoleController : ControllerBase
     {
-        private readonly IRoleService _service;
+        private readonly IRoleService _roleService;
 
-        public RoleController(IRoleService service)
+        public RoleController(IRoleService roleService)
         {
-            _service = service;
+            _roleService = roleService;
         }
 
-        [HttpGet("roles")]
-        public async Task<IActionResult> GetRoles() => Ok(await _service.GetRolesAsync());
+        [HttpGet]
+        public async Task<IActionResult> GetAllRoles()
+        {
+            var roles = await _roleService.GetAllRolesAsync();
+            return Ok(roles);
+        }
 
-        [HttpGet("roles/{id}")]
-        public async Task<IActionResult> GetRole(string id) => Ok(await _service.GetRoleByIdAsync(id));
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRoleById([FromQuery] string id)
+        {
+            var role = await _roleService.GetRoleByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound(new { Message = "Không tìm thấy quyền." });
+            }
+            return Ok(role);
+        }
 
-        [HttpPost("roles")]
-        public async Task<IActionResult> AddRole([FromBody] ApplicationRole role)
-            => Ok(await _service.AddRoleAsync(role));
+        [HttpPost]
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleRequest model)
+        {
+            var result = await _roleService.CreateRoleAsync(model.RoleName, model.Description);
 
-        [HttpPut("roles")]
-        public async Task<IActionResult> UpdateRole([FromBody] ApplicationRole role)
-            => Ok(await _service.UpdateRoleAsync(role));
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = "Thêm quyền thành công." });
+            }
 
-        [HttpDelete("roles/{id}")]
+            return BadRequest(result.Errors.Select(e => e.Description));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRole(string id, [FromBody] UpdateRoleRequest model)
+        {
+            var result = await _roleService.UpdateRoleAsync(id, model.NewRoleName, model.NewDescription!);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = "Cập nhật quyền thành công." });
+            }
+
+            return BadRequest(result.Errors.Select(e => e.Description));
+        }
+
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(string id)
         {
-            await _service.DeleteRoleAsync(id);
-            return Ok();
+            var result = await _roleService.DeleteRoleAsync(id);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = "Xóa quyền thành công." });
+            }
+
+            return BadRequest(result.Errors.Select(e => e.Description));
+        }
+
+        [HttpPut("assign/{userId}")]
+        public async Task<IActionResult> AssignRoles(string userId, [FromBody] AssignRolesRequest model)
+        {
+            var result = await _roleService.UpdateUserRolesAsync(userId, model.RoleNames ?? new List<string>());
+
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = $"Cập nhật quyền cho nhân viên {userId} thành công." });
+            }
+
+            return BadRequest(result.Errors.Select(e => e.Description));
         }
     }
 }

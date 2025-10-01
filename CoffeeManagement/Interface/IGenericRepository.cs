@@ -17,5 +17,6 @@ namespace CoffeeManagement.Interface
         void RemoveRange(IEnumerable<T> entities);
         void Update(T entity);
         void Remove(T entity);
+        Task<int> SaveChangesAsync();
     }
 }

@@ -9,9 +9,8 @@ namespace CoffeeManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderItemController : BaseController<OrderItem, OrderItemDto>
+    public class OrderItemController : ControllerBase
     {
-        public OrderItemController(IGenericRepository<OrderItem> repo, IMapper mapper)
-            : base(repo, mapper) { }
+
     }
 }

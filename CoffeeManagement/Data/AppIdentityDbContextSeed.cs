@@ -20,7 +20,7 @@ namespace CoffeeManagement.Data
 
                 foreach (var role in roles)
                 {
-                    var existingRole = await roleManager.FindByNameAsync(role.Name);
+                    var existingRole = await roleManager.FindByNameAsync(role.Name!);
                     if (existingRole == null)
                     {
                         await roleManager.CreateAsync(role);
@@ -40,14 +40,34 @@ namespace CoffeeManagement.Data
 
             var users = new List<(ApplicationUser user, string role, string password)>
     {
-        (new ApplicationUser { UserName = "admin", Email = "admin@coffee.com", FullName = "System Admin", EmailConfirmed = true }, "ADMIN", "Admin@123"),
-        (new ApplicationUser { UserName = "manager", Email = "manager@coffee.com", FullName = "Store Manager", EmailConfirmed = true }, "MANAGER", "Manager@123"),
-        (new ApplicationUser { UserName = "staff", Email = "staff@coffee.com", FullName = "Store Staff", EmailConfirmed = true }, "STAFF", "Staff@123")
+        (new ApplicationUser {
+            UserName = "admin",
+            Email = "admin@coffee.com",
+            FullName = "System Admin",
+            EmailConfirmed = true,
+            EmployeeCode = "SYS001"
+        }, "ADMIN", "Admin@123"),
+
+        (new ApplicationUser {
+            UserName = "manager",
+            Email = "manager@coffee.com",
+            FullName = "Store Manager",
+            EmailConfirmed = true,
+            EmployeeCode = "MNG002"
+        }, "MANAGER", "Manager@123"),
+
+        (new ApplicationUser {
+            UserName = "staff",
+            Email = "staff@coffee.com",
+            FullName = "Store Staff",
+            EmailConfirmed = true,
+            EmployeeCode = "STF003"
+        }, "STAFF", "Staff@123")
     };
 
             foreach (var (user, role, password) in users)
             {
-                var existingUser = await userManager.FindByEmailAsync(user.Email);
+                var existingUser = await userManager.FindByEmailAsync(user.Email!);
                 if (existingUser == null)
                 {
                     var createResult = await userManager.CreateAsync(user, password);

@@ -3,7 +3,6 @@ using CoffeeManagement.Data.Entities;
 using CoffeeManagement.Interface;
 using CoffeeManagement.Repositories;
 using CoffeeManagement.Services;
-using CoffeeManagement.Services.BackgroundServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -65,7 +64,6 @@ namespace CoffeeManagement.Extensions
 
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddHostedService<TokenCleanupService>();
 
             return services;
         }

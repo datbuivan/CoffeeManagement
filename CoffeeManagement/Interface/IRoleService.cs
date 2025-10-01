@@ -1,13 +1,16 @@
 ﻿using CoffeeManagement.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoffeeManagement.Interface
 {
     public interface IRoleService
     {
-        Task<List<ApplicationRole>> GetRolesAsync();
-        Task<ApplicationRole?> GetRoleByIdAsync(string id);
-        Task<ApplicationRole> AddRoleAsync(ApplicationRole role);
-        Task<ApplicationRole> UpdateRoleAsync(ApplicationRole role);
-        Task DeleteRoleAsync(string id);
+        Task<IEnumerable<ApplicationRole>> GetAllRolesAsync();
+        Task<ApplicationRole?> GetRoleByIdAsync(string roleId);
+        Task<IdentityResult> CreateRoleAsync(string roleName, string? description);
+        Task<IdentityResult> UpdateRoleAsync(string roleId, string newName, string newDescription);
+        Task<IdentityResult> DeleteRoleAsync(string roleId);
+
+        Task<IdentityResult> UpdateUserRolesAsync(string userId, IEnumerable<string> newRoles);
     }
 }

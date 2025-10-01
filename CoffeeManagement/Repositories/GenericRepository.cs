@@ -62,6 +62,11 @@ namespace CoffeeManagement.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
         //public async Task<int> CountAsync(ISpecification<T> spec)
         //{
         //    return await ApplySpecification(spec).CountAsync();

@@ -1,242 +1,117 @@
-﻿using CoffeeManagement.Data;
-using CoffeeManagement.Data.Entities;
+﻿using CoffeeManagement.Data.Entities;
 using CoffeeManagement.Interface;
-using CoffeeManagement.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using CoffeeManagement.Models.Auth;
 
 namespace CoffeeManagement.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
-        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IJwtService jwtService,
-            ILogger<AuthService> logger)
+        public AuthService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IJwtService jwtService)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager;
             _jwtService = jwtService;
-            _logger = logger;
         }
 
-        public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+        public async Task<AuthResponse?> LoginAsync(LoginRequest model)
         {
-            try
-            {
-                var existingUser = await _userManager.FindByEmailAsync(request.Email);
-                if (existingUser != null)
-                {
-                    return CreateErrorResponse("Email đã được sử dụng");
-                }
+            var user = await _userManager.FindByNameAsync(model.UserName)
+                               ?? await _userManager.FindByEmailAsync(model.UserName);
 
-                var user = new ApplicationUser
+            if (user == null || !user.IsActive)
+            {
+                return null; // Return null instead of SignInResult.Failed to match new signature
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(
+                user,
+                model.Password,
+                isPersistent: model.RememberMe,
+                lockoutOnFailure: true);
+
+            if (result.Succeeded)
+            {
+                user.LastLoginDate = DateTime.UtcNow;
+
+                var accessToken = await _jwtService.GenerateAccessTokenAsync(user);
+                var refreshToken = _jwtService.GenerateRefreshToken();
+
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7); // Example: 7-day refresh token lifespan
+
+                await _userManager.UpdateAsync(user);
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                return new AuthResponse
                 {
-                    UserName = request.Email,
-                    Email = request.Email,
-                    FullName = request.FullName,
-                    EmailConfirmed = true
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserId = user.Id,
+                    FullName = user.FullName ?? user.UserName!,
+                    Roles = userRoles.ToList(),
+                    AccessTokenExpires = DateTime.UtcNow.AddMinutes(15) // Example: 15-minute access token lifespan
                 };
-
-                var result = await _userManager.CreateAsync(user, request.Password);
-
-                if (!result.Succeeded)
-                {
-                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                    return CreateErrorResponse(errors);
-                }
-
-                return await CreateTokenResponseAsync(user,"Đăng ký thành công");
             }
-            catch (Exception ex)
+
+            // Handle LockedOut and other non-success scenarios
+            if (result.IsLockedOut)
             {
-                _logger.LogError(ex, "Error during registration");
-                return CreateErrorResponse("Có lỗi xảy ra khi đăng ký");
+                // This path should be handled by the controller using the returned null
             }
+
+            return null;
         }
 
-        public async Task<AuthResponse> LoginAsync(LoginRequest request)
+        public async Task LogoutAsync()
         {
-            try
+            var user = await _userManager.GetUserAsync(_signInManager.Context.User);
+            if (user != null)
             {
-                var user = await _userManager.FindByEmailAsync(request.Email);
-                if (user == null)
-                {
-                    return CreateErrorResponse("Email hoặc mật khẩu không chính xác");
-                }
-
-                var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: true);
-
-                if (!result.Succeeded)
-                {
-                    return CreateErrorResponse("Email hoặc mật khẩu không chính xác");
-                }
-                return await CreateTokenResponseAsync(user, "Đăng nhập thành công");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error during login");
-                return CreateErrorResponse("Có lỗi xảy ra khi đăng nhập");
-            }
-        }
-
-        public async Task<AuthResponse> RefreshTokenAsync(RefreshTokenRequest request)
-        {
-            try
-            {
-                var user = await _userManager.Users
-                    .FirstOrDefaultAsync(u => u.RefreshToken == request.RefreshToken);
-
-                if (user == null)
-                {
-                    return CreateErrorResponse("Refresh token không hợp lệ");
-                }
-
-                if (!user.HasValidRefreshToken())
-                {
-                    // Clear expired token
-                    user.RefreshToken = null;
-                    user.RefreshTokenExpiryTime = null;
-                    await _userManager.UpdateAsync(user);
-
-                    return CreateErrorResponse("Refresh token đã hết hạn");
-                }
-
-                return await CreateTokenResponseAsync(user, "Token đã được làm mới");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error during token refresh");
-                return CreateErrorResponse("Có lỗi xảy ra khi làm mới token");
-            }
-        }
-        public async Task<bool> RevokeTokenAsync(string userId)
-        {
-            try
-            {
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user == null)
-                {
-                    return false;
-                }
-
                 user.RefreshToken = null;
                 user.RefreshTokenExpiryTime = null;
+                await _userManager.UpdateAsync(user);
+            }
 
-                var result = await _userManager.UpdateAsync(user);
-                return result.Succeeded;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error revoking token for user: {UserId}", userId);
-                return false;
-            }
+            await _signInManager.SignOutAsync();
         }
 
-
-        public async Task<int> CleanupExpiredTokensAsync()
+        public async Task<AuthResponse?> RefreshTokenAsync(TokenRequest model)
         {
-            try
+            var userName = _jwtService.GetPrincipalFromExpiredToken(model.AccessToken);
+
+            if (userName == null) return null;
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null || user.RefreshToken != model.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             {
-                var usersWithExpiredTokens = await _userManager.Users
-                    .Where(u => u.RefreshToken != null &&
-                               u.RefreshTokenExpiryTime.HasValue &&
-                               u.RefreshTokenExpiryTime.Value <= DateTime.UtcNow)
-                    .ToListAsync();
-
-                var count = 0;
-                foreach (var user in usersWithExpiredTokens)
-                {
-                    user.RefreshToken = null;
-                    user.RefreshTokenExpiryTime = null;
-
-                    var result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        count++;
-                    }
-                }
-
-                return count;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error cleaning up expired tokens");
-                return 0;
-            }
-        }
-
-        public async Task<UserInfo?> GetUserProfileAsync(string userId)
-        {
-            try
-            {
-                var user = await _userManager.FindByIdAsync(userId);
-                if (user == null) return null;
-
-                return new UserInfo
-                {
-                    Id = user.Id,
-                    Email = user.Email ?? string.Empty,
-                    FullName = user.FullName,
-                    LastLoginDate = user.LastLoginDate,
-                };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting user profile");
                 return null;
             }
-        }
 
-        private async Task<AuthResponse> CreateTokenResponseAsync(ApplicationUser user, string message)
-        {
-            var accessToken = _jwtService.GenerateAccessToken(user);
-            var refreshToken = _jwtService.GenerateRefreshToken();
-            var accessTokenExpiry = _jwtService.GetAccessTokenExpiry();
-            var refreshTokenExpiry = _jwtService.GetRefreshTokenExpiry();
+            var newAccessToken = await _jwtService.GenerateAccessTokenAsync(user);
+            var newRefreshToken = _jwtService.GenerateRefreshToken();
 
-            user.RefreshToken = refreshToken;
-            user.RefreshTokenExpiryTime = refreshTokenExpiry;
-            user.LastLoginDate = DateTime.UtcNow;
+            // 5. Update and Store the new Refresh Token
+            user.RefreshToken = newRefreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7); // Reset expiration
+            await _userManager.UpdateAsync(user);
 
-            var updateResult = await _userManager.UpdateAsync(user);
-            if (!updateResult.Succeeded)
-            {
-                throw new InvalidOperationException("Failed to save refresh token");
-            }
+            // 6. Build Response
+            var userRoles = await _userManager.GetRolesAsync(user);
 
             return new AuthResponse
             {
-                Success = true,
-                Message = message,
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                AccessTokenExpiry = accessTokenExpiry,
-                RefreshTokenExpiry = refreshTokenExpiry,
-                User = new UserInfo
-                {
-                    Id = user.Id,
-                    Email = user.Email ?? string.Empty,
-                    FullName = user.FullName,
-                    LastLoginDate = user.LastLoginDate,
-                }
-            };
-        }
-
-
-        private static AuthResponse CreateErrorResponse(string message)
-        {
-            return new AuthResponse
-            {
-                Success = false,
-                Message = message
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken,
+                UserId = user.Id,
+                FullName = user.FullName ?? user.UserName!,
+                Roles = userRoles.ToList(),
+                AccessTokenExpires = DateTime.UtcNow.AddMinutes(15)
             };
         }
 

@@ -5,10 +5,13 @@ namespace CoffeeManagement.Interface
 {
     public interface IJwtService
     {
-        string GenerateAccessToken(ApplicationUser user);
+        // Tạo Access Token
+        Task<string> GenerateAccessTokenAsync(ApplicationUser user);
+
+        // Tạo Refresh Token (chuỗi ngẫu nhiên)
         string GenerateRefreshToken();
-        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
-        DateTime GetAccessTokenExpiry();
-        DateTime GetRefreshTokenExpiry();
+
+        // Trích xuất Principal (Claims) từ Access Token đã hết hạn
+        string? GetPrincipalFromExpiredToken(string token);
     }
 }

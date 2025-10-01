@@ -74,10 +74,18 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("EmployeeCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastLoginDate")
                         .HasColumnType("datetime2");
@@ -124,6 +132,9 @@ namespace CoffeeManagement.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeCode")
+                        .IsUnique();
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -145,12 +156,18 @@ namespace CoffeeManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -163,9 +180,15 @@ namespace CoffeeManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("CurrentStock")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -179,6 +202,9 @@ namespace CoffeeManagement.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");
@@ -190,15 +216,18 @@ namespace CoffeeManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("IngredientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Quantity")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<Guid?>("RelatedDocumentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TransactionType")
                         .IsRequired()
@@ -208,9 +237,18 @@ namespace CoffeeManagement.Data.Migrations
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IngredientId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("InventoryTransactions");
                 });
@@ -221,22 +259,40 @@ namespace CoffeeManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("FinalAmount")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TableNumber")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("TableId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TableId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -247,10 +303,16 @@ namespace CoffeeManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductSizeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -264,11 +326,16 @@ namespace CoffeeManagement.Data.Migrations
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductSizeId");
 
                     b.ToTable("OrderItems");
                 });
@@ -282,8 +349,10 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageUrl")
-                        .HasPrecision(18, 4)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
@@ -293,6 +362,9 @@ namespace CoffeeManagement.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -300,36 +372,14 @@ namespace CoffeeManagement.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductIngredient", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("QuantityNeeded")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("decimal(18,4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IngredientId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductIngredients");
-                });
-
             modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductSize", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 4)
@@ -342,8 +392,8 @@ namespace CoffeeManagement.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -358,6 +408,9 @@ namespace CoffeeManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("ReportDate")
                         .HasColumnType("datetime2");
 
@@ -370,6 +423,9 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<decimal>("TotalRevenue")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -385,6 +441,9 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<decimal>("ClosingStock")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("InQuantity")
                         .HasPrecision(18, 4)
@@ -404,11 +463,74 @@ namespace CoffeeManagement.Data.Migrations
                     b.Property<DateTime>("ReportDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IngredientId");
 
                     b.ToTable("ReportInventorySummaries");
+                });
+
+            modelBuilder.Entity("CoffeeManagement.Data.Entities.Supplier", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("CoffeeManagement.Data.Entities.Table", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -525,7 +647,28 @@ namespace CoffeeManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CoffeeManagement.Data.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Ingredient");
+                });
+
+            modelBuilder.Entity("CoffeeManagement.Data.Entities.Order", b =>
+                {
+                    b.HasOne("CoffeeManagement.Data.Entities.Table", "Table")
+                        .WithMany("Orders")
+                        .HasForeignKey("TableId");
+
+                    b.HasOne("CoffeeManagement.Data.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.OrderItem", b =>
@@ -542,9 +685,15 @@ namespace CoffeeManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CoffeeManagement.Data.Entities.ProductSize", "ProductSize")
+                        .WithMany()
+                        .HasForeignKey("ProductSizeId");
+
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+
+                    b.Navigation("ProductSize");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Product", b =>
@@ -556,25 +705,6 @@ namespace CoffeeManagement.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductIngredient", b =>
-                {
-                    b.HasOne("CoffeeManagement.Data.Entities.Ingredient", "Ingredient")
-                        .WithMany("ProductIngredients")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CoffeeManagement.Data.Entities.Product", "Product")
-                        .WithMany("ProductIngredients")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.ProductSize", b =>
@@ -658,8 +788,6 @@ namespace CoffeeManagement.Data.Migrations
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Ingredient", b =>
                 {
                     b.Navigation("InventoryTransactions");
-
-                    b.Navigation("ProductIngredients");
                 });
 
             modelBuilder.Entity("CoffeeManagement.Data.Entities.Order", b =>
@@ -671,9 +799,12 @@ namespace CoffeeManagement.Data.Migrations
                 {
                     b.Navigation("OrderItems");
 
-                    b.Navigation("ProductIngredients");
-
                     b.Navigation("ProductSizes");
+                });
+
+            modelBuilder.Entity("CoffeeManagement.Data.Entities.Table", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

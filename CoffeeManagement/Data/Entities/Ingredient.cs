@@ -8,13 +8,14 @@ namespace CoffeeManagement.Data.Entities
     public class Ingredient : BaseEntities
     {
         public string Name { get; set; } = null!;
-        public string Unit { get; set; } = null!;
-        [Precision(18, 4)]
-        public decimal CurrentStock { get; set; }
-        [Precision(18, 4)]
-        public decimal ReorderLevel { get; set; }
+        public string Unit { get; set; } = null!; // Ví dụ: kg, lít, gram, ml
 
-        public ICollection<ProductIngredient> ProductIngredients { get; set; } = new HashSet<ProductIngredient>();
+        [Precision(18, 4)]
+        public decimal CurrentStock { get; set; } // Tồn kho hiện tại
+        [Precision(18, 4)]
+        public decimal ReorderLevel { get; set; } // Mức đặt hàng lại
+        public bool IsActive { get; set; } = true; // Ngừng sử dụng nguyên liệu
+
         public ICollection<InventoryTransaction> InventoryTransactions { get; set; } = new HashSet<InventoryTransaction>();
     }
 }

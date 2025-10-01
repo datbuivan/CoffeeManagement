@@ -9,9 +9,8 @@ namespace CoffeeManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReportDailyRevenueController : BaseController<ReportDailyRevenue, ReportDailyRevenueDto>
+    public class ReportDailyRevenueController : ControllerBase
     {
-        public ReportDailyRevenueController(IGenericRepository<ReportDailyRevenue> repo, IMapper mapper)
-            : base(repo, mapper) { }
+
     }
 }

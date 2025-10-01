@@ -1,7 +1,11 @@
-﻿using CoffeeManagement.Interface;
+﻿using CoffeeManagement.Data.Entities;
+using CoffeeManagement.Helpers;
+using CoffeeManagement.Interface;
 using CoffeeManagement.Models;
+using CoffeeManagement.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoffeeManagement.Controllers
@@ -11,112 +15,74 @@ namespace CoffeeManagement.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly ILogger<AuthController> _logger;
+        // Inject UserManager to handle Lockout results gracefully
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger)
+        public AuthController(IAuthService authService, UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
-            _logger = logger;
+            _userManager = userManager;
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<AuthResponse>> Register([FromBody] RegisterRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var result = await _authService.RegisterAsync(request);
-
-            if (!result.Success)
-            {
-                return BadRequest(result);
-            }
-
-            return Ok(result);
-        }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AuthResponse>> Login([FromBody] LoginRequest request)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _authService.LoginAsync(request);
+            var authResponse = await _authService.LoginAsync(model);
 
-            if (!result.Success)
+            if (authResponse != null)
             {
-                return BadRequest(result);
+                return Ok(authResponse);
             }
 
-            return Ok(result);
-        }
+            var user = await _userManager.FindByNameAsync(model.UserName)
+                               ?? await _userManager.FindByEmailAsync(model.UserName);
 
-        [HttpPost("refresh-token")]
-        public async Task<ActionResult<AuthResponse>> RefreshToken([FromBody] RefreshTokenRequest request)
-        {
-            if (!ModelState.IsValid)
+            if (user != null)
             {
-                return BadRequest(ModelState);
+                if (!user.IsActive)
+                {
+                    return Unauthorized(new { Message = "Tài khoản không hoạt động." });
+                }
+
+                var result = await _userManager.IsLockedOutAsync(user);
+                if (result)
+                {
+                    return StatusCode(423, new { Message = "Tài khoản bị khóa tạm thời." });
+                }
             }
 
-            var result = await _authService.RefreshTokenAsync(request);
-
-            if (!result.Success)
-            {
-                return BadRequest(result);
-            }
-
-            return Ok(result);
-        }
-
-        [HttpPost("revoke-token")]
-        [Authorize]
-        public async Task<ActionResult> RevokeToken([FromBody] RefreshTokenRequest request)
-        {
-            var result = await _authService.RevokeTokenAsync(request.RefreshToken);
-
-            if (!result)
-            {
-                return BadRequest(new { message = "Token không hợp lệ" });
-            }
-
-            return Ok(new { message = "Token đã được thu hồi" });
+            return Unauthorized(new { Message = "Tên đăng nhập hoặc mật khẩu không đúng." });
         }
 
         [HttpPost("logout")]
-        [Authorize]
-        public async Task<ActionResult> Logout()
+        [Authorize] // Requires a valid Access Token to perform this action
+        public async Task<IActionResult> Logout()
         {
-            var userId = User.FindFirst("sub")?.Value ?? User.FindFirst("nameid")?.Value;
-
-            if (string.IsNullOrEmpty(userId))
-                return BadRequest(new { message = "Không tìm thấy thông tin người dùng" });
-
-            var result = await _authService.RevokeTokenAsync(userId);
-
-            return result
-                ? Ok(new { message = "Đăng xuất thành công" })
-                : BadRequest(new { message = "Có lỗi xảy ra khi đăng xuất" });
+            await _authService.LogoutAsync();
+            return Ok(new { Message = "Đăng xuất thành công. Refresh Token đã bị hủy." });
         }
 
-        [HttpGet("profile")]
-        [Authorize]
-        public ActionResult GetProfile()
-        {
-            var userId = User.FindFirst("sub")?.Value ?? User.FindFirst("nameid")?.Value;
-            var email = User.FindFirst("email")?.Value;
-            var fullName = User.FindFirst("fullName")?.Value;
 
-            return Ok(new
+        [HttpPost("refresh-token")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequest model)
+        {
+            var authResponse = await _authService.RefreshTokenAsync(model);
+
+            if (authResponse == null)
             {
-                id = userId,
-                email = email,
-                fullName = fullName
-            });
+                // Invalidate all tokens and force re-login if refresh fails
+                return Unauthorized(new { Message = "Token không hợp lệ hoặc đã hết hạn. Vui lòng đăng nhập lại." });
+            }
+
+            return Ok(authResponse);
         }
     }
 }

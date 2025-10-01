@@ -16,10 +16,19 @@ namespace CoffeeManagement.Extensions
         {
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.AddScoped<IProductSizeRepository, ProductSizeRepository>();
+
 
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IVnPayService, VnPayService>();
+            services.AddScoped<IOrderService, OrderService>();
+
+
 
             //services.AddScoped<IBaseService<CategoryDto>, CategoryService>();
             //services.AddScoped<IBaseService<ProductDto>, ProductService>();

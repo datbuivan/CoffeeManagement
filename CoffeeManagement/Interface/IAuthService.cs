@@ -1,14 +1,13 @@
-﻿using CoffeeManagement.Models;
+﻿
+using CoffeeManagement.Models.Auth;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoffeeManagement.Interface
 {
     public interface IAuthService
     {
-        Task<AuthResponse> RegisterAsync(RegisterRequest request);
-        Task<AuthResponse> LoginAsync(LoginRequest request);
-        Task<AuthResponse> RefreshTokenAsync(RefreshTokenRequest request);
-        Task<bool> RevokeTokenAsync(string userId);
-        Task<int> CleanupExpiredTokensAsync();
-        Task<UserInfo?> GetUserProfileAsync(string userId);
+        Task<AuthResponse?> LoginAsync(LoginRequest model);
+        Task LogoutAsync();
+        Task<AuthResponse?> RefreshTokenAsync(TokenRequest model);
     }
 }

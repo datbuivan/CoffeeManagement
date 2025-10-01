@@ -9,9 +9,8 @@ namespace CoffeeManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class InventoryTransactionController : BaseController<InventoryTransaction, InventoryTransactionDto>
+    public class InventoryTransactionController : ControllerBase
     {
-        public InventoryTransactionController(IGenericRepository<InventoryTransaction> repo, IMapper mapper)
-            : base(repo, mapper) { }
+
     }
 }

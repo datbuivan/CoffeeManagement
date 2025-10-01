@@ -1,0 +1,163 @@
+[
+    {
+        "Name": "Hạt Cà Phê Robusta",
+        "Unit": "kg",
+        "CurrentStock": 15.50,
+        "ReorderLevel": 5.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Sữa Đặc Có Đường",
+        "Unit": "lít",
+        "CurrentStock": 25.00,
+        "ReorderLevel": 10.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Sữa Tươi Thanh Trùng",
+        "Unit": "lít",
+        "CurrentStock": 20.00,
+        "ReorderLevel": 8.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Đường Cát Trắng",
+        "Unit": "kg",
+        "CurrentStock": 50.00,
+        "ReorderLevel": 20.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Bột Kem Sữa (Milk Foam)",
+        "Unit": "kg",
+        "CurrentStock": 4.50,
+        "ReorderLevel": 1.50,
+        "IsActive": true
+    },
+    {
+        "Name": "Sốt Sô-cô-la",
+        "Unit": "lít",
+        "CurrentStock": 3.00,
+        "ReorderLevel": 1.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Syrup Hạnh Nhân",
+        "Unit": "ml",
+        "CurrentStock": 1500.00,
+        "ReorderLevel": 500.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Lá Trà Đen",
+        "Unit": "kg",
+        "CurrentStock": 2.50,
+        "ReorderLevel": 0.50,
+        "IsActive": true
+    },
+    {
+        "Name": "Bột Trà Xanh Matcha",
+        "Unit": "kg",
+        "CurrentStock": 2.00,
+        "ReorderLevel": 0.50,
+        "IsActive": true
+    },
+    {
+        "Name": "Syrup Đào",
+        "Unit": "ml",
+        "CurrentStock": 2250.00,
+        "ReorderLevel": 750.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Đào Miếng Ngâm",
+        "Unit": "kg",
+        "CurrentStock": 8.00,
+        "ReorderLevel": 3.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Syrup Vải",
+        "Unit": "ml",
+        "CurrentStock": 1500.00,
+        "ReorderLevel": 500.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Syrup Sả",
+        "Unit": "ml",
+        "CurrentStock": 1000.00,
+        "ReorderLevel": 300.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Hạt Sen Sấy",
+        "Unit": "kg",
+        "CurrentStock": 1.50,
+        "ReorderLevel": 0.50,
+        "IsActive": true
+    },
+    {
+        "Name": "Đậu Đỏ Đóng Hộp",
+        "Unit": "kg",
+        "CurrentStock": 4.00,
+        "ReorderLevel": 1.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Bột Frappe (Bột Nền)",
+        "Unit": "kg",
+        "CurrentStock": 10.00,
+        "ReorderLevel": 3.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Sốt Caramel",
+        "Unit": "lít",
+        "CurrentStock": 2.00,
+        "ReorderLevel": 0.50,
+        "IsActive": true
+    },
+    {
+        "Name": "Bánh Quy Oreo",
+        "Unit": "hộp",
+        "CurrentStock": 12.00,
+        "ReorderLevel": 4.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Bánh Mì Que",
+        "Unit": "cái",
+        "CurrentStock": 50.00,
+        "ReorderLevel": 20.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Patê Gan",
+        "Unit": "kg",
+        "CurrentStock": 2.50,
+        "ReorderLevel": 1.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Thịt Gà Xé",
+        "Unit": "kg",
+        "CurrentStock": 3.00,
+        "ReorderLevel": 1.00,
+        "IsActive": true
+    },
+    {
+        "Name": "Thịt Bò Xốt",
+        "Unit": "kg",
+        "CurrentStock": 3.50,
+        "ReorderLevel": 1.50,
+        "IsActive": true
+    },
+    {
+        "Name": "Phô Mai Lát",
+        "Unit": "gói",
+        "CurrentStock": 15.00,
+        "ReorderLevel": 5.00,
+        "IsActive": true
+    }
+]

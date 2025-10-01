@@ -30,7 +30,7 @@ namespace CoffeeManagement.Helpers
         public string GetResponseData(string key)
         {
             string retValue;
-            if (_responseData.TryGetValue(key, out retValue))
+            if (_responseData.TryGetValue(key, out retValue!))
             {
                 return retValue;
             }

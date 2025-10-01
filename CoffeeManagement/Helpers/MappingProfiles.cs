@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
 using CoffeeManagement.Data.Dtos;
+using CoffeeManagement.Data.Dtos.Category;
+using CoffeeManagement.Data.Dtos.Product;
+using CoffeeManagement.Data.Dtos.ProductSize;
+using CoffeeManagement.Data.Dtos.Table;
 using CoffeeManagement.Data.Entities;
 
 namespace CoffeeManagement.Helpers
@@ -9,16 +13,17 @@ namespace CoffeeManagement.Helpers
         public MappingProfiles()
         {
             // Category
-            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<CategoryCreateDto, Category>();
+            CreateMap<CategoryUpdateDto, Category>();
+            CreateMap<Category, CategoryResultDto>();
 
             // Product
-            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, ProductResultDto>();
+            CreateMap<ProductCreateDto, Product>();
+            CreateMap<ProductUpdateDto, Product>();
 
             // Ingredient
             CreateMap<Ingredient, IngredientDto>().ReverseMap();
-
-            // ProductIngredient
-            CreateMap<ProductIngredient, ProductIngredientDto>().ReverseMap();
 
             // Order
             CreateMap<Order, OrderDto>().ReverseMap();
@@ -34,6 +39,16 @@ namespace CoffeeManagement.Helpers
 
             // ReportInventorySummary
             CreateMap<ReportInventorySummary, ReportInventorySummaryDto>().ReverseMap();
+
+            // Table
+            CreateMap<TableCreateDto, Table>();
+            CreateMap<TableUpdateDto, Table>();
+            CreateMap<Table, TableResultDto>();
+
+            //ProductSize 
+            CreateMap<ProductSizeCreateDto, ProductSize>();
+            CreateMap<ProductSizeUpdateDto, ProductSize>();
+            CreateMap<ProductSize, ProductSizeResultDto>();
         }
     }
 }

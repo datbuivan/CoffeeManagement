@@ -1,4 +1,5 @@
-﻿using CoffeeManagement.Data.Entities.Custom;
+﻿using CoffeeManagement.Data.Entities;
+using CoffeeManagement.Data.Entities.Custom;
 
 namespace CoffeeManagement.Data.Dtos
 {
@@ -8,5 +9,7 @@ namespace CoffeeManagement.Data.Dtos
         public int? TableNumber { get; set; }
         public string Status { get; set; } = "Pending"; // Pending, Processing, Served, Paid
         public decimal TotalAmount { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
+
     }
 }

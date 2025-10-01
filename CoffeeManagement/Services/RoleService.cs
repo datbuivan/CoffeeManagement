@@ -1,45 +1,74 @@
 ﻿using CoffeeManagement.Data.Entities;
 using CoffeeManagement.Interface;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeManagement.Services
 {
     public class RoleService : IRoleService
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly ILogger<RoleService> _log;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RoleService(
-            RoleManager<ApplicationRole> roleManager,
-            ILogger<RoleService> log)
+        public RoleService(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
-            _log = log;
-        }
-        public async Task<List<ApplicationRole>> GetRolesAsync() =>
-        _roleManager.Roles.ToList();
-
-        public async Task<ApplicationRole?> GetRoleByIdAsync(string id) =>
-            await _roleManager.FindByIdAsync(id);
-
-        public async Task<ApplicationRole> AddRoleAsync(ApplicationRole role)
-        {
-            var result = await _roleManager.CreateAsync(role);
-            if (!result.Succeeded) throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
-            return role;
+            _userManager = userManager;
         }
 
-        public async Task<ApplicationRole> UpdateRoleAsync(ApplicationRole role)
+        public async Task<IEnumerable<ApplicationRole>> GetAllRolesAsync()
         {
-            var result = await _roleManager.UpdateAsync(role);
-            if (!result.Succeeded) throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
-            return role;
+            return await _roleManager.Roles.AsNoTracking().ToListAsync();
         }
 
-        public async Task DeleteRoleAsync(string id)
+        public async Task<ApplicationRole?> GetRoleByIdAsync(string roleId)
         {
-            var role = await _roleManager.FindByIdAsync(id);
-            if (role != null) await _roleManager.DeleteAsync(role);
+            return await _roleManager.FindByIdAsync(roleId);
+        }
+
+        public async Task<IdentityResult> CreateRoleAsync(string roleName, string? description)
+        {
+            var role = new ApplicationRole { Name = roleName, Description = description };
+            return await _roleManager.CreateAsync(role);
+        }
+
+        public async Task<IdentityResult> UpdateRoleAsync(string roleId, string newName, string newDescription)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null)
+                return IdentityResult.Failed(new IdentityError { Description = "Quyền không tồn tại." });
+
+            role.Name = newName;
+            role.NormalizedName = _roleManager.NormalizeKey(newName);
+            role.Description = newDescription;
+
+            return await _roleManager.UpdateAsync(role);
+        }
+
+        public async Task<IdentityResult> DeleteRoleAsync(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null) return IdentityResult.Success;
+
+            return await _roleManager.DeleteAsync(role);
+        }
+
+        public async Task<IdentityResult> UpdateUserRolesAsync(string userId, IEnumerable<string> newRoles)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return IdentityResult.Failed(new IdentityError { Description = "Nhân viên không tồn tại." });
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            // 1. Loại bỏ các roles cũ không còn
+            var rolesToRemove = currentRoles.Except(newRoles);
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+            if (!removeResult.Succeeded) return removeResult;
+
+            // 2. Thêm các roles mới
+            var rolesToAdd = newRoles.Except(currentRoles);
+            return await _userManager.AddToRolesAsync(user, rolesToAdd);
         }
     }
 }
