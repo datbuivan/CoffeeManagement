@@ -5,13 +5,17 @@ using CoffeeManagement.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// ✅ Cấu hình port cho Railway
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerDocumentation();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
@@ -91,7 +95,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-app.Run($"http://0.0.0.0:{port}");
-// app.Run();
+app.Run();
 
