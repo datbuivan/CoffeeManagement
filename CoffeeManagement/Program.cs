@@ -20,6 +20,12 @@ var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL")
                   ?? builder.Configuration.GetConnectionString("CoffeeManagementConnStr");
 
 string connectionString;
+
+if (string.IsNullOrEmpty(databaseUrl))
+{
+    throw new InvalidOperationException("DATABASE_URL hoặc CoffeeManagementConnStr không được thiết lập.");
+}
+
 if (databaseUrl.StartsWith("postgres://") || databaseUrl.StartsWith("postgresql://"))
 {
     var uri = new Uri(databaseUrl);
@@ -85,7 +91,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-// app.Run($"http://0.0.0.0:{port}");
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Run($"http://0.0.0.0:{port}");
+// app.Run();
 
