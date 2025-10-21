@@ -112,7 +112,9 @@ namespace CoffeeManagement.Services
                     await transaction.CommitAsync();
 
                     // var ipAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "127.0.0.1";
-                    var ipAddress = "127.0.0.1";
+                    var ipAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString()
+                    ?? _httpContextAccessor.HttpContext?.Request.Headers["X-Forwarded-For"].FirstOrDefault()
+                    ?? "Unknown";
                     var paymentUrl = _vnPayService.CreatePaymentUrl(order, ipAddress);
 
                     // Trả về URL để client chuyển hướng
