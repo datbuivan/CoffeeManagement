@@ -1,0 +1,7 @@
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+startCommand = "dotnet CoffeeManagement.dll"
+healthcheckPath = "/swagger/index.html"
+restartPolicyType = "ON_FAILURE"

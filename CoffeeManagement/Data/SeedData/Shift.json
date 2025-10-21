@@ -1,0 +1,20 @@
+[
+    {
+        "Name": "Ca sáng",
+        "StartTime": "06:00:00",
+        "EndTime": "12:00:00",
+        "IsActive": true
+    },
+    {
+        "Name": "Ca chiều",
+        "StartTime": "12:00:00",
+        "EndTime": "18:00:00",
+        "IsActive": true
+    },
+    {
+        "Name": "Ca tối",
+        "StartTime": "18:00:00",
+        "EndTime": "23:00:00",
+        "IsActive": true
+    }
+]

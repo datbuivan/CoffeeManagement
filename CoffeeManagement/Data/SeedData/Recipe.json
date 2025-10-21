@@ -1,0 +1,157 @@
+[
+    {
+        "ProductSizeId": "6cb5163e-be24-42a5-3f02-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.020
+    },
+    {
+        "ProductSizeId": "6cb5163e-be24-42a5-3f02-08ddfefa0c54",
+        "IngredientId": "2510f5d2-0d45-4648-dd41-08de00ecdd88",
+        "QuantityUsed": 0.030
+    },
+    {
+        "ProductSizeId": "091e50df-0b2f-46b2-3f03-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.025
+    },
+    {
+        "ProductSizeId": "091e50df-0b2f-46b2-3f03-08ddfefa0c54",
+        "IngredientId": "2510f5d2-0d45-4648-dd41-08de00ecdd88",
+        "QuantityUsed": 0.040
+    },
+    {
+        "ProductSizeId": "92880c9e-2cf1-46bb-3f04-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.030
+    },
+    {
+        "ProductSizeId": "92880c9e-2cf1-46bb-3f04-08ddfefa0c54",
+        "IngredientId": "2510f5d2-0d45-4648-dd41-08de00ecdd88",
+        "QuantityUsed": 0.050
+    },
+    {
+        "ProductSizeId": "c8223de6-d61b-40aa-3f05-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.015
+    },
+    {
+        "ProductSizeId": "c8223de6-d61b-40aa-3f05-08ddfefa0c54",
+        "IngredientId": "2510f5d2-0d45-4648-dd41-08de00ecdd88",
+        "QuantityUsed": 0.025
+    },
+    {
+        "ProductSizeId": "c8223de6-d61b-40aa-3f05-08ddfefa0c54",
+        "IngredientId": "7879cc56-45b2-4b30-dd42-08de00ecdd88",
+        "QuantityUsed": 0.050
+    },
+    {
+        "ProductSizeId": "2b087eef-c682-4658-3f06-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.020
+    },
+    {
+        "ProductSizeId": "2b087eef-c682-4658-3f06-08ddfefa0c54",
+        "IngredientId": "2510f5d2-0d45-4648-dd41-08de00ecdd88",
+        "QuantityUsed": 0.030
+    },
+    {
+        "ProductSizeId": "2b087eef-c682-4658-3f06-08ddfefa0c54",
+        "IngredientId": "7879cc56-45b2-4b30-dd42-08de00ecdd88",
+        "QuantityUsed": 0.070
+    },
+    {
+        "ProductSizeId": "e5309b5b-71c9-4229-3f07-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.025
+    },
+    {
+        "ProductSizeId": "e5309b5b-71c9-4229-3f07-08ddfefa0c54",
+        "IngredientId": "2510f5d2-0d45-4648-dd41-08de00ecdd88",
+        "QuantityUsed": 0.035
+    },
+    {
+        "ProductSizeId": "e5309b5b-71c9-4229-3f07-08ddfefa0c54",
+        "IngredientId": "7879cc56-45b2-4b30-dd42-08de00ecdd88",
+        "QuantityUsed": 0.080
+    },
+    {
+        "ProductSizeId": "614717c8-6d68-447c-3f08-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.025
+    },
+    {
+        "ProductSizeId": "614717c8-6d68-447c-3f08-08ddfefa0c54",
+        "IngredientId": "c29cb7b7-d127-4167-dd43-08de00ecdd88",
+        "QuantityUsed": 0.010
+    },
+    {
+        "ProductSizeId": "0ddf6b71-b0d8-4ed2-3f09-08ddfefa0c54",
+        "IngredientId": "b8f09588-8e0d-44ee-dd40-08de00ecdd88",
+        "QuantityUsed": 0.030
+    },
+    {
+        "ProductSizeId": "0ddf6b71-b0d8-4ed2-3f09-08ddfefa0c54",
+        "IngredientId": "c29cb7b7-d127-4167-dd43-08de00ecdd88",
+        "QuantityUsed": 0.012
+    },
+    {
+        "ProductSizeId": "36de1b0e-fbea-4df3-3f0b-08ddfefa0c54",
+        "IngredientId": "dd06a086-258b-4426-dd47-08de00ecdd88",
+        "QuantityUsed": 0.005
+    },
+    {
+        "ProductSizeId": "36de1b0e-fbea-4df3-3f0b-08ddfefa0c54",
+        "IngredientId": "b19ceefb-24d1-43b2-dd49-08de00ecdd88",
+        "QuantityUsed": 20
+    },
+    {
+        "ProductSizeId": "36de1b0e-fbea-4df3-3f0b-08ddfefa0c54",
+        "IngredientId": "0e64c130-db4c-4c07-dd4c-08de00ecdd88",
+        "QuantityUsed": 10
+    },
+    {
+        "ProductSizeId": "36de1b0e-fbea-4df3-3f0b-08ddfefa0c54",
+        "IngredientId": "22fdc6c4-c9f4-4d88-dd4a-08de00ecdd88",
+        "QuantityUsed": 0.030
+    },
+    {
+        "ProductSizeId": "8f74a75f-af2f-4bbd-3f0c-08ddfefa0c54",
+        "IngredientId": "dd06a086-258b-4426-dd47-08de00ecdd88",
+        "QuantityUsed": 0.005
+    },
+    {
+        "ProductSizeId": "8f74a75f-af2f-4bbd-3f0c-08ddfefa0c54",
+        "IngredientId": "b19ceefb-24d1-43b2-dd49-08de00ecdd88",
+        "QuantityUsed": 25
+    },
+    {
+        "ProductSizeId": "8f74a75f-af2f-4bbd-3f0c-08ddfefa0c54",
+        "IngredientId": "0e64c130-db4c-4c07-dd4c-08de00ecdd88",
+        "QuantityUsed": 15
+    },
+    {
+        "ProductSizeId": "8f74a75f-af2f-4bbd-3f0c-08ddfefa0c54",
+        "IngredientId": "22fdc6c4-c9f4-4d88-dd4a-08de00ecdd88",
+        "QuantityUsed": 0.040
+    },
+    {
+        "ProductSizeId": "7cbc2899-785b-4a78-3f0e-08ddfefa0c54",
+        "IngredientId": "c9706f09-0fa8-4e02-dd48-08de00ecdd88",
+        "QuantityUsed": 0.005
+    },
+    {
+        "ProductSizeId": "7cbc2899-785b-4a78-3f0e-08ddfefa0c54",
+        "IngredientId": "7879cc56-45b2-4b30-dd42-08de00ecdd88",
+        "QuantityUsed": 0.100
+    },
+    {
+        "ProductSizeId": "7cbc2899-785b-4a78-3f0e-08ddfefa0c54",
+        "IngredientId": "c249bf18-4183-463c-dd4e-08de00ecdd88",
+        "QuantityUsed": 0.020
+    },
+    {
+        "ProductSizeId": "7cbc2899-785b-4a78-3f0e-08ddfefa0c54",
+        "IngredientId": "fc092397-4635-43dc-dd4f-08de00ecdd88",
+        "QuantityUsed": 0.010
+    }
+]

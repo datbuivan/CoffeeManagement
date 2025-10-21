@@ -1,0 +1,17 @@
+﻿using CoffeeManagement.Data.Entities.Custom;
+
+namespace CoffeeManagement.Data.Entities
+{
+    public class Product : BaseEntities
+    {
+        public string Name { get; set; } = null!;
+        public Guid CategoryId { get; set; }
+        public string? ImageUrl { get; set; }
+        public bool IsAvailable { get; set; } = true;
+
+        public Category Category { get; set; } = null!;
+        public ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
+        public ICollection<ProductSize> ProductSizes { get; set; } = new HashSet<ProductSize>();
+
+    }
+}

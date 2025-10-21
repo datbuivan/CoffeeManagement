@@ -1,0 +1,37 @@
+[
+  {
+    "Id": "d3e1b60d-2927-49fe-2aac-08ddf507acbd",
+    "Name": "CÀ PHÊ PHIN",
+    "Description": "Cà phê truyền thống"
+  },
+  {
+    "Id": "cb3d3a91-9106-4789-2aad-08ddf507acbd",
+    "Name": "PHINDI",
+    "Description": "Cà phê Phin độc đáo"
+  },
+  {
+    "Id": "709f931a-b503-4dbc-2aae-08ddf507acbd",
+    "Name": "TRÀ",
+    "Description": "Các loại trà"
+  },
+  {
+    "Id": "03b86ecc-67c0-4d17-2aaf-08ddf507acbd",
+    "Name": "BÁNH",
+    "Description": "Bánh ngọt & bánh pastry"
+  },
+  {
+    "Id": "f0b385ce-acab-49d2-2ab0-08ddf507acbd",
+    "Name": "FREEZE",
+    "Description": "Đồ uống đá xay"
+  },
+  {
+    "Id": "98f62d08-7f4c-4014-2ab1-08ddf507acbd",
+    "Name": "BÁNH MÌ QUE",
+    "Description": "Bánh mì que"
+  },
+  {
+    "Id": "e992b882-6456-4c6e-2ab2-08ddf507acbd",
+    "Name": "COMBO",
+    "Description": "Các combo ưu đãi"
+  }
+]
