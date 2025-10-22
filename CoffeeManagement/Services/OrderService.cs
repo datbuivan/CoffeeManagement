@@ -34,9 +34,10 @@ namespace CoffeeManagement.Services
             await using var transaction = await _uow.BeginTransactionAsync();
             try
             {
-                var orderItems = new List<OrderItem>();
                 decimal totalAmount = 0;
+                var orderItemsData = new List<(Guid ProductId, Guid ProductSizeId, int Quantity, decimal UnitPrice, decimal SubTotal)>();
 
+                // Bước 1: Validate và trừ kho
                 foreach (var itemDto in dto.Items)
                 {
                     var productSize = await _uow.GenericRepository<ProductSize>().GetByIdAsync(itemDto.ProductSizeId);
@@ -55,30 +56,43 @@ namespace CoffeeManagement.Services
                         _uow.GenericRepository<Ingredient>().Update(ingredient);
                     }
 
-                    var orderItem = new OrderItem
-                    {
-                        ProductId = productSize.ProductId,
-                        ProductSizeId = productSize.Id,
-                        Quantity = itemDto.Quantity,
-                        UnitPrice = productSize.Price,
-                        SubTotal = productSize.Price * itemDto.Quantity,
-                    };
-
-                    orderItems.Add(orderItem);
-                    totalAmount += orderItem.SubTotal;
+                    var subTotal = productSize.Price * itemDto.Quantity;
+                    orderItemsData.Add((productSize.ProductId, productSize.Id, itemDto.Quantity, productSize.Price, subTotal));
+                    totalAmount += subTotal;
                 }
 
-                // Bước 2: Tạo đối tượng Order và xử lý theo phương thức thanh toán
+                // Bước 2: Tạo Order
                 var order = new Order
                 {
+                    Id = Guid.NewGuid(), // ✅ Tạo Id
                     UserId = dto.UserId,
                     TableId = dto.TableId,
-                    OrderItems = orderItems,
                     TotalAmount = totalAmount,
                     DiscountAmount = dto.DiscountAmount,
                     FinalAmount = totalAmount - dto.DiscountAmount,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    Status = dto.PaymentMethod.Equals("Cash", StringComparison.OrdinalIgnoreCase)
+                        ? "Paid"
+                        : "WaitingForPayment"
                 };
+
+                _uow.GenericRepository<Order>().Add(order);
+
+                // Bước 3: Tạo OrderItems với OrderId
+                foreach (var itemData in orderItemsData)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        Id = Guid.NewGuid(), // ✅ Tạo Id
+                        OrderId = order.Id,  // ✅ Set OrderId
+                        ProductId = itemData.ProductId,
+                        ProductSizeId = itemData.ProductSizeId,
+                        Quantity = itemData.Quantity,
+                        UnitPrice = itemData.UnitPrice,
+                        SubTotal = itemData.SubTotal
+                    };
+                    _uow.GenericRepository<OrderItem>().Add(orderItem);
+                }
 
                 // Xử lý bàn
                 if (dto.TableId.HasValue)
@@ -89,35 +103,21 @@ namespace CoffeeManagement.Services
                     _uow.GenericRepository<Table>().Update(table);
                 }
 
-                // Xử lý thanh toán
+                await _uow.Complete();
+                await transaction.CommitAsync();
+
+                // Xử lý response theo payment method
                 if (dto.PaymentMethod.Equals("Cash", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Thanh toán tiền mặt: Chuyển trạng thái thành "Paid" ngay lập tức
-                    order.Status = "Paid";
-                    _uow.GenericRepository<Order>().Add(order);
-                    await _uow.Complete();
-                    await transaction.CommitAsync();
-
-                    // Trả về thông tin đơn hàng đã hoàn tất
                     var orderResult = _mapper.Map<OrderResultDto>(order);
                     return orderResult;
                 }
                 else if (dto.PaymentMethod.Equals("VnPay", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Thanh toán VNPAY: Chuyển trạng thái thành "Chờ thanh toán"
-                    // Điều này quan trọng để bếp không pha chế món chưa được trả tiền
-                    order.Status = "WaitingForPayment";
-                    _uow.GenericRepository<Order>().Add(order);
-                    await _uow.Complete();
-                    await transaction.CommitAsync();
-
-                    // var ipAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "127.0.0.1";
                     var ipAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString()
-                    ?? _httpContextAccessor.HttpContext?.Request.Headers["X-Forwarded-For"].FirstOrDefault()
-                    ?? "Unknown";
+                        ?? _httpContextAccessor.HttpContext?.Request.Headers["X-Forwarded-For"].FirstOrDefault()
+                        ?? "Unknown";
                     var paymentUrl = _vnPayService.CreatePaymentUrl(order, ipAddress);
-
-                    // Trả về URL để client chuyển hướng
                     return new { PaymentUrl = paymentUrl };
                 }
                 else
@@ -133,10 +133,7 @@ namespace CoffeeManagement.Services
                     {
                         await _uow.RollbackAsync();
                     }
-                    catch
-                    {
-                        // Transaction đã commit hoặc disposed, bỏ qua lỗi rollback
-                    }
+                    catch { }
                 }
                 throw;
             }
