@@ -78,7 +78,6 @@ namespace CoffeeManagement.Services
 
                 _uow.GenericRepository<Order>().Add(order);
 
-                // Bước 3: Tạo OrderItems với OrderId
                 foreach (var itemData in orderItemsData)
                 {
                     var orderItem = new OrderItem
@@ -106,7 +105,6 @@ namespace CoffeeManagement.Services
                 await _uow.Complete();
                 await transaction.CommitAsync();
 
-                // Xử lý response theo payment method
                 if (dto.PaymentMethod.Equals("Cash", StringComparison.OrdinalIgnoreCase))
                 {
                     var orderResult = _mapper.Map<OrderResultDto>(order);
