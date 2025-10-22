@@ -52,6 +52,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
+        policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("Content-Disposition");
         policy.WithOrigins("https://coffee-management-fe.vercel.app").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("Content-Disposition");
     });
 });
